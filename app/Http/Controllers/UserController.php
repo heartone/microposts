@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\User; // 追加
+use App\User; 
+use App\Micropost; // 追加
 
 class UsersController extends Controller
 {
@@ -28,4 +29,35 @@ class UsersController extends Controller
 
         return view('users.show', $data);
     }
+    
+    public function followings($id)
+    {
+        $user = User::find($id);
+        $followings = $user->followings()->pagenate(10);
+        
+        $data = [
+            'user' => $user,
+            'users' => $followings,
+        ];
+        
+        $data += $this->count($user);
+        
+        return view('users.followings', $data);
+    }
+    
+    public function followers($id)
+    {
+        $user = User::find($id);
+        $followers = $user->followers()->pagenate(10);
+        
+        $data = [
+            'user' => $user,
+            'users' => $followers,
+        ];
+        
+        $data += $this->count($user);
+        
+        return view('users.followers', $data);
+    }
+    
 }
