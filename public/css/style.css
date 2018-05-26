@@ -1,0 +1,22 @@
+.nav.nav-pills {
+    padding: 5px;
+    font-size: 12px;
+}
+.nav.nav-pills .number {
+    display: block;
+    font-size: 18px;
+    
+    
+}
+#post-form {
+    margin-bottom: 15px;
+}
+form.form-inline {
+    display: inline;
+    padding-right: 5px;
+}
+.media-list li {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px dotted #ddd;
+}

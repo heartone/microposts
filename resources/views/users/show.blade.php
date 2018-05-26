@@ -2,30 +2,22 @@
 
 @section('content')
     <div class="row">
-        <aside class="col-xs-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title">{{ $user->name }}</h3>
-                </div>
-                <div class="panel-body">
-                    <img class="media-object img-rounded img-responsive" src="{{ Gravatar::src($user->email, 500) }}" alt="">
-                </div>
-            </div>
-            @include('user_follow.follow_button', ['user' => $user])
-        </aside>
-        <div class="col-xs-8">
-            <ul class="nav nav-tabs nav-justified">
-                <li role="presentation" class="{{ Request::is('users/' . $user->id) ? 'active' : '' }}"><a href="{{ route('users.show', ['id' => $user->id]) }}">TimeLine <span class="badge">{{ $count_microposts }}</span></a></li>
-                <li><a role="presentation" class="{{ Request::is('users/*/followings) ? 'active' : '' }}" href="{{ route('users.followings', ['id' => $user->id]) }}">Followings <span class="badge">{{ $count_followings }}</span></a></li>
-                <li><a role="presentation" class="{{ Request::is('users/*/followers) ? 'active' : '' }}" href="{{route('users.followers', ['id' => $user->id]) }}">Followers <span class="badge">{{ $count_follwoers }}</span></a></li>
-            </ul>
+        
+        @include('commons.user_profile', ['user' => $user])
+        
+        <div class="col-xs-12 col-sm-7 col-md-8">
+            
             @if (Auth::user()->id == $user->id)
-                  {!! Form::open(['route' => 'microposts.store']) !!}
-                      <div class="form-group">
-                          {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '2']) !!}
-                          {!! Form::submit('Post', ['class' => 'btn btn-primary btn-block']) !!}
-                      </div>
+                <div id="post-form">
+                {!! Form::open(['route' => 'microposts.store']) !!}
+                    <div class="form-group">
+                        {!! Form::textarea('content', old('content'), ['class' => 'form-control', 'rows' => '3', 'placeholder' => '今何してる？']) !!}
+                    </div>
+                    <div class="form-group text-right">
+                          {!! Form::submit('投稿する', ['class' => 'btn btn-primary']) !!}
+                    </div>
                   {!! Form::close() !!}
+                </div><!-- #post-form -->
             @endif
             @if (count($microposts) > 0)
                 @include('microposts.microposts', ['microposts' => $microposts])
